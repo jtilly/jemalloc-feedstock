@@ -8,8 +8,13 @@ set -x
 #
 # We disable this feature until we better understand how to avoid loader errors
 # of this type
-./configure --prefix=$PREFIX \
-            --disable-tls \
-            --with-mangling=aligned_alloc:__aligned_alloc
+if [[ ${target_platform} =~ linux.* ]]; then
+  ./configure --prefix=$PREFIX \
+              --disable-tls \
+              --with-mangling=aligned_alloc:__aligned_alloc
+else
+  ./configure --prefix=$PREFIX \
+              --disable-tls
+fi
 make -j${CPU_COUNT}
 make install
