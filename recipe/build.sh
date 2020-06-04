@@ -9,9 +9,16 @@ set -x
 # We disable this feature until we better understand how to avoid loader errors
 # of this type
 if [[ ${target_platform} =~ linux.* ]]; then
+  # Fixes:
+  #  * As conda-forge/anaconda patches the glibc headers to have an inline
+  #    aligned_alloc implementation, we need to mangle aligned_alloc to use
+  #    a separate name, we cannot override it.
+  #  * With the old glibc version/headers, we also run into
+  #    https://github.com/jemalloc/jemalloc/issues/1237
   ./configure --prefix=$PREFIX \
               --disable-tls \
-              --with-mangling=aligned_alloc:__aligned_alloc
+              --with-mangling=aligned_alloc:__aligned_alloc \
+              --disable-initial-exec-tls
 else
   ./configure --prefix=$PREFIX \
               --disable-tls
