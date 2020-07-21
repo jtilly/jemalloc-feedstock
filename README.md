@@ -5,7 +5,7 @@ Home: http://jemalloc.net
 
 Package license: BSD-2-Clause
 
-Feedstock license: BSD 3-Clause
+Feedstock license: BSD-3-Clause
 
 Summary: general purpose malloc(3) implementation
 
