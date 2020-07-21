@@ -16,11 +16,13 @@ if [[ ${target_platform} =~ linux.* ]]; then
   #  * With the old glibc version/headers, we also run into
   #    https://github.com/jemalloc/jemalloc/issues/1237
   ./configure --prefix=$PREFIX \
+              --disable-static \
               --disable-tls \
               --with-mangling=aligned_alloc:__aligned_alloc \
               --disable-initial-exec-tls
 else
   ./configure --prefix=$PREFIX \
+              --disable-static \
               --disable-tls
 fi
 make -j${CPU_COUNT}
