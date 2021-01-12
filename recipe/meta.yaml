@@ -6,14 +6,13 @@ package:
   version: {{ version }}
 
 source:
-  fn: {{ version }}.tar.bz2
   url: https://github.com/jemalloc/jemalloc/releases/download/{{ version }}/jemalloc-{{ version }}.tar.bz2
   sha256: 34330e5ce276099e2e8950d9335db5a875689a4c6a56751ef3b1d8c537f887f6
   patches:
     - export-mangled-syms.patch
 
 build:
-  number: 4
+  number: 5
   run_exports:
     # Symbols were only removed in update from 3 to 4
     # https://abi-laboratory.pro/index.php?view=timeline&l=jemalloc
