@@ -22,6 +22,10 @@ if [[ ${target_platform} =~ linux.* ]]; then
               --disable-tls \
               --with-mangling=aligned_alloc:__aligned_alloc \
               --disable-initial-exec-tls
+elif [[ "${target_platform}" == "osx-arm64" ]]; then
+  ./configure --prefix=$PREFIX \
+              --disable-static \
+              --with-lg-page=14
 else
   ./configure --prefix=$PREFIX \
               --disable-static \
