@@ -21,15 +21,18 @@ if [[ ${target_platform} =~ linux.* ]]; then
               --disable-static \
               --disable-tls \
               --with-mangling=aligned_alloc:__aligned_alloc \
-              --disable-initial-exec-tls
+              --disable-initial-exec-tls \
+              --with-jemalloc-prefix=$JEMALLOC_PREFIX
 elif [[ "${target_platform}" == "osx-arm64" ]]; then
   ./configure --prefix=$PREFIX \
               --disable-static \
-              --with-lg-page=14
+              --with-lg-page=14 \
+              --with-jemalloc-prefix=$JEMALLOC_PREFIX
 else
   ./configure --prefix=$PREFIX \
               --disable-static \
-              --disable-tls
+              --disable-tls \
+              --with-jemalloc-prefix=$JEMALLOC_PREFIX
 fi
 make -j${CPU_COUNT}
 make install

@@ -1,5 +1,7 @@
 {% set name = "jemalloc" %}
 {% set version = "5.2.1" %}
+{% set build_number = "6" %}
+{% set build_string = "h{}_{}{}".format(PKG_HASH, build_number, "_prefix" if jemalloc_prefix else "") %}
 
 package:
   name: {{ name }}
@@ -12,12 +14,17 @@ source:
     - export-mangled-syms.patch
 
 build:
-  number: 5
+  number: {{ build_number }}
+  string: "{{ build_string }}"
   run_exports:
     # Symbols were only removed in update from 3 to 4
     # https://abi-laboratory.pro/index.php?view=timeline&l=jemalloc
     - {{ pin_subpackage(name, max_pin=None) }}
   skip: true  # [win]
+  script_env:
+    - JEMALLOC_PREFIX={{ "je_" if jemalloc_prefix else "" }}
+  track_features:
+    {{ "- jemalloc-{}".format("prefix" if jemalloc_prefix else "")}}
 
 requirements:
   build:
